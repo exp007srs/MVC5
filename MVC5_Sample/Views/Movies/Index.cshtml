@@ -8,6 +8,17 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+
+    @*GET REQUEST*@
+    @* @using (Html.BeginForm("Index", "Movies", FormMethod.Get))*@
+
+    @*POST REQUEST*@
+    @using (Html.BeginForm("Index", "Movies", FormMethod.Post))
+    {
+        <p>Title: @Html.TextBox("SearchString") <br /><br />
+            <input type="submit" value="Filter" />
+        </p>
+    }
 </p>
 <table class="table">
     <tr>
