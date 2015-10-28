@@ -15,7 +15,9 @@
     @*POST REQUEST*@
     @using (Html.BeginForm("Index", "Movies", FormMethod.Post))
     {
-        <p>Title: @Html.TextBox("SearchString") <br /><br />
+        <p>
+            Genre: @Html.DropDownList("movieGenre", "All")
+            Title: @Html.TextBox("SearchString") <br /><br />
             <input type="submit" value="Filter" />
         </p>
     }

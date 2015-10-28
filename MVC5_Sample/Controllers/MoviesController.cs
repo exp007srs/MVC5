@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5_Sample.Models;
+using System.Diagnostics;
 
 namespace MVC5_Sample.Controllers
 {
@@ -22,13 +23,19 @@ namespace MVC5_Sample.Controllers
 
         public ActionResult Index(string searchString)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             var movies = from m in db.Movies select m;
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(s => s.Title.Contains(searchString));
             }
-
+            sw.Stop();
+            
+            //Trace.Assert(true, "FF");
+            //Debug.Print(Convert.ToString(sw.ElapsedMilliseconds));
+            
             return View(movies);
         }
 
