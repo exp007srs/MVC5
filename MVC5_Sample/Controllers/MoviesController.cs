@@ -21,9 +21,19 @@ namespace MVC5_Sample.Controllers
         //    return View(db.Movies.ToList());
         //}
 
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string movieGenre, string searchString)
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            Stopwatch sw = Stopwatch.StartNew(); //For recording execution duration - Performance Check
+
+
+            var genreLst = new List<string>();
+
+            var genreQry = from d in db.Movies
+                           orderby d.Genre
+                           select d.Genre;
+
+            genreLst.AddRange(genreQry.Distinct());
+            ViewBag.movieGenre = new SelectList(genreLst);
 
             var movies = from m in db.Movies select m;
 
@@ -31,6 +41,12 @@ namespace MVC5_Sample.Controllers
             {
                 movies = movies.Where(s => s.Title.Contains(searchString));
             }
+
+            if (!string.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(s => s.Genre.Equals(movieGenre));
+            }
+
             sw.Stop();
             
             //Trace.Assert(true, "FF");
